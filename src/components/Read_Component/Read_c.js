@@ -26,12 +26,12 @@ export default {
         path7:mdiAlphaXCircle ,
 
       headers: [
-        { text: 'ID', value: 'id' },
-        { text: 'Nombre', value: 'name' },
-        { text: 'Email', value: 'email' },
-        { text: 'Total', value: 'total' },
-        { text: 'Pendientes', value: 'stand_by' },
-        { text: 'Actions', value: 'actions' },
+        { text: 'ID', value: 'id' , style: 'color: red;' },
+        { text: 'Nombre', value: 'name', style: 'color: blue;' },
+        { text: 'Email', value: 'email', style: 'color: blue;' },
+        { text: 'Total', value: 'total', style: 'color: blue;' },
+        { text: 'Pendientes', value: 'stand_by', style: 'color: blue;' },
+        { text: 'Acciones', value: 'actions', style: 'color: blue;' },
       
       ],
       items:[],
