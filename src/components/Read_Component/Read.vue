@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-app-bar app color="primary" dark>
-      <v-toolbar-title>Gestion de actividades</v-toolbar-title>
+      <v-toolbar-title>Homework Control</v-toolbar-title>
       <v-spacer></v-spacer>
       
     </v-app-bar>
@@ -47,13 +47,13 @@
           <v-card>
             <v-container>
               <v-text-field
-                label="Tarea"
+                label="Work"
                 v-model="selectedWork.homework"
                 :disabled="!edit"
               ></v-text-field>
               <v-textarea
                 v-model="selectedWork.details"
-                label="Detalles"
+                label="Details"
                 :disabled="!edit"
               ></v-textarea>
               <v-row v-if="selectedWork.id" align="center" justify="center">
@@ -78,9 +78,9 @@
                 </v-col>
               </v-row>
               <v-divider class="mt-3"></v-divider>
-              <v-btn v-if="!edit" @click="editP()" class="white--text primary">Editar</v-btn>
-              <v-btn v-if="edit" @click="createHomework()" class="white--text primary">Guardar</v-btn>
-              <v-btn style="margin-left: 5px;" type="submit" @click="cleanHomework()" class="white--text red">Cancelar</v-btn>
+              <v-btn v-if="!edit" @click="editP()" class="white--text primary">Edit</v-btn>
+              <v-btn v-if="edit" @click="createHomework()" class="white--text primary">Save</v-btn>
+              <v-btn style="margin-left: 5px;" type="submit" @click="cleanHomework()" class="white--text red">Cancel</v-btn>
             </v-container>
           </v-card>
         </v-dialog>
@@ -117,7 +117,7 @@
 
               <v-row no-gutters class="justify-center">
                 <v-col cols="9">
-                  <v-text-field v-if="!enableUser" label="Conteo de Pendientes" :value="selectedRecord.stand_by" readonly></v-text-field>
+                  <v-text-field v-if="!enableUser" label="Count Earrings" :value="selectedRecord.stand_by" readonly></v-text-field>
                 </v-col>
               </v-row>
               <v-row v-if="!enableUser" class="justify-center">
@@ -128,9 +128,9 @@
                         <thead>
                           <tr>
                             <th class="text-left" style="width: 10%">#</th>
-                            <th class="text-left" style="width: 50%">Tareas</th>
-                            <th class="text-left" style="width: 10%">Estatus</th>
-                            <th class="text-left" style="width: 30%">Acciones</th>
+                            <th class="text-left" style="width: 50%">Works</th>
+                            <th class="text-left" style="width: 10%">Status</th>
+                            <th class="text-left" style="width: 30%">Actions</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -293,7 +293,7 @@ export default {
 .new-user-title {
   font-size: 24px;
   font-weight: bold;
-  color: #3f51b5; /* Color primario de Vuetify */
+  color: #3f51b5; 
   margin-top: 16px;
   text-align: center;
 }

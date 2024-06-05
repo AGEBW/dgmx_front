@@ -28,11 +28,11 @@ export default {
 
       headers: [
         { text: 'ID', value: 'id' , style: 'color: red;' },
-        { text: 'Nombre', value: 'name', style: 'color: blue;' },
+        { text: 'Name', value: 'name', style: 'color: blue;' },
         { text: 'Email', value: 'email', style: 'color: blue;' },
         { text: 'Total', value: 'total', style: 'color: blue;' },
-        { text: 'Pendientes', value: 'stand_by', style: 'color: blue;' },
-        { text: 'Acciones', value: 'actions', style: 'color: blue;' },
+        { text: 'Earrings', value: 'stand_by', style: 'color: blue;' },
+        { text: 'Actions', value: 'actions', style: 'color: blue;' },
       
       ],
       items:[],
