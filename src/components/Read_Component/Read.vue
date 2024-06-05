@@ -6,7 +6,12 @@
       
     </v-app-bar>
 
+    
     <v-main>
+      <v-container class="justify-center" >
+          <v-btn class="mx-2" fab dark small color="success" @click="viewUser()">
+            <v-icon dark>{{ path6 }}</v-icon>
+          </v-btn>
       <v-container>
         <!-- Imagen transitoria -->
         <v-expand-transition>
@@ -20,6 +25,8 @@
         </v-expand-transition>
 
         <!-- Tabla de datos -->
+        
+        </v-container>
         <v-data-table
           :headers="headers"
           :items="items"
@@ -28,6 +35,9 @@
           <template v-slot:[`item.actions`]="{ item }">
             <v-btn class="mx-2" fab dark small color="primary" @click="viewItem(item)">
               <v-icon dark>{{ path3 }}</v-icon>
+            </v-btn>
+            <v-btn class="mx-2" fab dark small color="red" @click="deleteDataU(item)">
+              <v-icon dark>{{ path2 }}</v-icon>
             </v-btn>
           </template>
         </v-data-table>
@@ -83,20 +93,34 @@
             <v-container>
               <v-row no-gutters class="justify-center">
                 <v-col cols="9">
-                  <v-text-field label="Nombre" :value="selectedRecord.name" readonly></v-text-field>
+                  <v-text-field :disabled="!enableUser" label="Nombre" v-model="selectedRecord.name" ></v-text-field>
                 </v-col>
               </v-row>
               <v-row no-gutters class="justify-center">
                 <v-col cols="9">
-                  <v-text-field label="Email" :value="selectedRecord.email" readonly></v-text-field>
+                  <v-text-field :disabled="!enableUser"  label="Email" v-model="selectedRecord.email"  ></v-text-field>
                 </v-col>
               </v-row>
+              <div v-if="enableUser">
+                <v-row no-gutters class="justify-center">
+                  <v-col cols="9">
+                    <v-text-field label="password" v-model="selectedRecord.password" type="password" ></v-text-field>
+                  </v-col>
+                </v-row>
+
+                <v-row no-gutters class="justify-center">
+                  <v-col cols="9">
+                    <v-text-field label="password confirms" v-model="selectedRecord.password_confirmation" type="password"></v-text-field>
+                  </v-col>
+                </v-row>
+              </div>
+
               <v-row no-gutters class="justify-center">
                 <v-col cols="9">
-                  <v-text-field label="Conteo de Pendientes" :value="selectedRecord.stand_by" readonly></v-text-field>
+                  <v-text-field v-if="!enableUser" label="Conteo de Pendientes" :value="selectedRecord.stand_by" readonly></v-text-field>
                 </v-col>
               </v-row>
-              <v-row class="justify-center">
+              <v-row v-if="!enableUser" class="justify-center">
                 <v-list lines="three">
                   <v-list-item v-for="(n, index) in selectedRecord.homew" :key="n.id">
                     <v-list-item-content>
@@ -123,7 +147,7 @@
                             </td>
                             <td>
                               <v-btn icon small @click="viewHomework(n)"><svg-icon color="blue" type="mdi" :path="path1"></svg-icon></v-btn>
-                              <v-btn icon small @click="deleteData(n)"><svg-icon color="red" type="mdi" :path="path2"></svg-icon></v-btn>
+                              <v-btn icon small @click="deleteData(n,0)"><svg-icon color="red" type="mdi" :path="path2"></svg-icon></v-btn>
                             </td>
                           </tr>
                         </tbody>
@@ -139,11 +163,79 @@
               </div>
             </v-expand-transition>
             <v-card-actions class="justify-center">
-              <v-btn class="white--text blue" @click="newHomework(selectedRecord)">Añadir</v-btn>
-              <v-btn class="white--text red" @click="modalOpen = false">Cancelar</v-btn>
+              <v-btn v-if="enableUser" class="white--text blue" @click="updateUser()"><v-icon dark>{{ path1 }}</v-icon></v-btn>
+              <v-btn v-if="!enableUser" class="white--text orange" @click="editUser()"><v-icon dark>{{ path1 }}</v-icon></v-btn>
+              <v-btn v-if="!enableUser" class="white--text blue" @click="newHomework(selectedRecord)"><v-icon dark>{{ path6 }}</v-icon></v-btn>
+              <v-btn v-if="!enableUser" class="white--text red" @click="modalOpen = false"><v-icon dark>{{ path7 }}</v-icon></v-btn>
+              <v-btn v-if="enableUser" class="white--text red" @click="disableUser"><v-icon dark>{{ path7 }}</v-icon></v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
+
+        <v-dialog v-model="modalUser" max-width="400px">
+          <v-card>
+            <v-card-title class="d-flex flex-column align-items-center">
+              <v-img
+                height="50px"
+                width="100px"
+                class="rounded-circle mx-auto d-block"
+                :src="selectedRecord.image"
+                cover
+              ></v-img>
+              <h3 class="new-user-title">New User</h3>
+              <v-divider class="mt-3"></v-divider>
+            </v-card-title>
+            <v-container>
+              <v-text-field
+                v-model="user_d.name"
+                color="primary"
+                label="First name"
+                variant="underlined"
+              ></v-text-field>
+        
+              <v-text-field
+                v-model="user_d.last"
+                color="primary"
+                label="Last name"
+                variant="underlined"
+              ></v-text-field>
+        
+              <v-text-field
+                v-model="user_d.email"
+                color="primary"
+                label="Email"
+                variant="underlined"
+              ></v-text-field>
+        
+              <v-text-field
+                v-model="user_d.password"
+                color="primary"
+                label="Password"
+                placeholder="Enter your password"
+                variant="underlined"
+              ></v-text-field>
+              <v-text-field
+                v-model="user_d.password_confirmation"
+                color="primary"
+                label="Password"
+                placeholder="Enter your password"
+                variant="underlined"
+              ></v-text-field>
+              
+            <!--   <v-switch
+              v-model="user_d.terms"
+              label="I agree to site terms and conditions"></v-switch> -->
+        
+            </v-container>
+            
+         <v-card-actions  class="justify-center">
+            <v-btn color="success" @click="addUser()">
+          Add  
+          <v-icon icon="mdi-chevron-right" end></v-icon>
+        </v-btn>
+      </v-card-actions>
+          </v-card>
+        </v-dialog>  
       </v-container>
     </v-main>
   </v-app>
@@ -197,5 +289,12 @@ export default {
 }
 .swal2-popup {
   font-family: 'MyCustomFont', sans-serif;
+}
+.new-user-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #3f51b5; /* Color primario de Vuetify */
+  margin-top: 16px;
+  text-align: center;
 }
 </style>

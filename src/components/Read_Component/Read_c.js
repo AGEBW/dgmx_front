@@ -9,6 +9,7 @@ import {
 } from '@mdi/js';
 import {User, Homework}  from '@/Models/Read_models';
 import Swal from 'sweetalert2';
+import auth from '../Login_Component/auth.js';
 export default {
   
   name: 'Read_',
@@ -35,11 +36,15 @@ export default {
       
       ],
       items:[],
-      modalOpen: false,
+      user_d: new User(),
       modalDelete:false,
+      modalUser:false,
+      modalOpen: false,
       modalEdit:false,
+      modalEditU:false,
+      enableUser:false,
       show: false,
-      selectedRecord: {},
+      selectedRecord: new User(),
       selectedWork: new Homework(),
       id_user:'',
       id_homework:'',
@@ -85,6 +90,21 @@ export default {
       }
     },
 
+    async sendDeleteU(id) {
+      try {
+        await this.$http.post('http://127.0.0.1:8000/api/deleteU',{id:id});
+        Swal.fire({
+          icon: 'success',
+          title: '¡Cambio realizado!',
+          showConfirmButton: false,
+          timer: 1500
+        });
+        this.fetchDataFromAPI();
+      } catch (error) {
+        console.error('Error al obtener datos de la API:', error);
+      }
+    },
+
     async sendData(){
       try{
         const response = await this.$http.post('http://127.0.0.1:8000/api/update',this.selectedWork);
@@ -100,6 +120,40 @@ export default {
       }
     },
 
+    addUser(){
+      this.user_d.terms=true;
+      auth.register(this.user_d,1).then(res=>{
+        console.log(res);
+        this.fetchDataFromAPI();
+        this.modalUser=false;
+      }).catch(error=>{
+        console.log('error:',error);
+      });
+    },
+
+    viewUser(){
+      this.modalUser=true;
+    },
+
+    editUser(){
+      this.enableUser=true;
+    },
+
+    updateUser(){
+    this.selectedRecord.terms=1;
+    auth.register(this.selectedRecord,1).then(res=>{
+      console.log(res);
+      this.fetchDataFromAPI();
+      this.modalEdit=false;
+    }).catch(error=>{
+      console.log('error:',error);
+    });
+    },
+
+    disableUser(){
+      this.enableUser=false;
+    },
+
     viewItem(item) {
       this.selectedRecord = item;
       this.id_user=item.id;
@@ -109,10 +163,6 @@ export default {
     viewHomework(item) {
       this.selectedWork=item;
       this.modalEdit = true;
-     /*  this.selectedWork.homework = item.homework;
-      this.selectedWork.details = item.details;
-      this.selectedWork.status = item.status;
-     */
       console.log('contenido en objeto',this.selectedWork)
     },
     
@@ -177,6 +227,22 @@ export default {
          }
       });
       console.log('datos a enviar',this.selectedWork);
+    },
+    deleteDataU(item){
+      Swal.fire({
+        title: 'Atencion',
+        text: '¿Estás seguro de eliminar el registro?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Confirmar',
+        cancelButtonText: 'Cancelar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.sendDeleteU(item.id);
+         }
+      });
     },
 
     updateStatus() {
