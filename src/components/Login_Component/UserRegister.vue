@@ -54,8 +54,9 @@
     <v-card-actions class="justify-center">
       <v-btn  color="success" @click="register()">
         Complete Registration
-
-        <v-icon icon="mdi-chevron-right" end></v-icon>
+      </v-btn>
+      <v-btn  color="primary" @click="register_v()">
+        Login
       </v-btn>
     </v-card-actions>
   </v-card>
@@ -83,6 +84,10 @@ export default {
             console.log(error);
           }
       );
+    },
+    register_v() {
+        this.$router.push('/');
+      
     }
   }
 };

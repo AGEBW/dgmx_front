@@ -38,6 +38,7 @@ class AuthService {
     });
   }
 
+
   async register(user, flag) {
     if (!user.terms) {
       this.messagef('warning', '!Oh no¡', 'You need to accept the Terms and Conditions');
@@ -71,6 +72,9 @@ class AuthService {
       timer: 1500 // Duración en milisegundos antes de cerrar automáticamente
     });
   }
+/*   register_v(router){
+    router.push('/register');
+  } */
 }
 
 export default new AuthService();
