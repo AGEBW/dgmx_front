@@ -264,12 +264,6 @@
                 </template>
                 <span>Editar User</span>
               </v-tooltip>
-
-            <!--   <v-btn v-if="enableUser" class="white--text blue" @click="updateUser()"><v-icon dark>{{ path1 }}</v-icon></v-btn>
-              <v-btn v-if="!enableUser" class="white--text orange" @click="editUser()"><v-icon dark>{{ path1 }}</v-icon></v-btn>
-              <v-btn v-if="!enableUser" class="white--text blue" @click="newHomework(selectedRecord)"><v-icon dark>{{ path6 }}</v-icon></v-btn>
-              <v-btn v-if="!enableUser" class="white--text red" @click="modalOpen = false"><v-icon dark>{{ path7 }}</v-icon></v-btn>
-              <v-btn v-if="enableUser" class="white--text red" @click="disableUser"><v-icon dark>{{ path7 }}</v-icon></v-btn> -->
             </v-card-actions>
           </v-card>
         </v-dialog>
@@ -322,12 +316,7 @@
                 label="Password"
                 placeholder="Enter your password"
                 variant="underlined"
-              ></v-text-field>
-              
-            <!--   <v-switch
-              v-model="user_d.terms"
-              label="I agree to site terms and conditions"></v-switch> -->
-        
+              ></v-text-field>     
             </v-container>
             
          <v-card-actions  class="justify-center">
@@ -345,7 +334,7 @@
 
 <script>
 import ReadMixin from './Read_c.js';
-
+import './Read_s.css'; 
 export default {
   name: 'Read_',
   mixins: [ReadMixin],
@@ -363,57 +352,3 @@ export default {
  
 };
 </script>
-
-
-<style scoped>
-.number-circle {
-  display: inline-block;
-  width: 25px;
-  height: 25px;
-  line-height: 30px;
-  border-radius: 50%;
-  background-color: #42a5f5;
-  color: white;
-  text-align: center;
-  font-weight: bold;
-}
-.ml-3 {
-  margin-left: 1rem;
-  margin-top: 3px;
-}
-.w-100 {
-  width: 100%;
-}
-.my-4 {
-  margin: 1.5rem 0;
-}
-.scroll-table {
-  max-height: 300px;
-  overflow-y: auto;
-}
-.swal2-popup {
-  font-family: 'MyCustomFont', sans-serif;
-}
-.new-user-title {
-  font-size: 24px;
-  font-weight: bold;
-  color: #3f51b5; 
-  margin-top: 16px;
-  text-align: center;
-}
-.v-list {
-  background-color: #1976D2;
-}
-.v-list-item {
-  color: white;
-}
-.v-menu__content--fixed {
-  background-color: transparent;
-  box-shadow: none;
-}
-/* Estilo para el texto de los elementos de la lista */
-.v-list-item-title {
-  color: white; /* Color blanco para el texto */
-  font-weight: bold; /* Texto en negritas */
-}
-</style>

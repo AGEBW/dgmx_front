@@ -1,0 +1,50 @@
+.number-circle {
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    line-height: 30px;
+    border-radius: 50%;
+    background-color: #42a5f5;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+  }
+  .ml-3 {
+    margin-left: 1rem;
+    margin-top: 3px;
+  }
+  .w-100 {
+    width: 100%;
+  }
+  .my-4 {
+    margin: 1.5rem 0;
+  }
+  .scroll-table {
+    max-height: 300px;
+    overflow-y: auto;
+  }
+  .swal2-popup {
+    font-family: 'MyCustomFont', sans-serif;
+  }
+  .new-user-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #3f51b5; 
+    margin-top: 16px;
+    text-align: center;
+  }
+  .v-list {
+    background-color: #1976D2;
+  }
+  .v-list-item {
+    color: white;
+  }
+  .v-menu__content--fixed {
+    background-color: transparent;
+    box-shadow: none;
+  }
+  /* Estilo para el texto de los elementos de la lista */
+  .v-list-item-title {
+    color: white; /* Color blanco para el texto */
+    font-weight: bold; /* Texto en negritas */
+  }
