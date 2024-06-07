@@ -3,17 +3,6 @@
     <v-app-bar app color="primary" dark>
       <v-toolbar-title>{{ user_data.name ? user_data.name : '' }}</v-toolbar-title>
       <v-spacer></v-spacer>
-     <!--  <v-btn icon @click="logout">
-        <v-icon>mdi-logout</v-icon>
-      </v-btn>
-      <v-tooltip bottom>
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn icon v-bind="attrs" v-on="on" @click="viewUserL">
-            <v-icon>mdi-account</v-icon>
-          </v-btn>
-        </template>
-        <span>View User</span>
-      </v-tooltip> -->
 
       <v-menu offset-y>
         <template v-slot:activator="{ on, attrs }">
@@ -54,9 +43,17 @@
     
     <v-main>
       <v-container class="justify-center" >
-          <v-btn class="mx-2" fab dark small color="success" @click="viewUser()">
+        
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+          <v-btn  v-bind="attrs" v-on="on" class="mx-2" fab dark small color="success" @click="viewUser()">
             <v-icon dark>{{ path6 }}</v-icon>
           </v-btn>
+          </template>
+          <span>Add User</span>
+        </v-tooltip>
+    
+
       <v-container>
         <!-- Imagen transitoria -->
         <v-expand-transition>
@@ -78,12 +75,24 @@
           class="elevation-1"
         >
           <template v-slot:[`item.actions`]="{ item }">
-            <v-btn class="mx-2" fab dark small color="primary" @click="viewItem(item)">
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on, attrs }">
+            <v-btn class="mx-2" fab dark small color="primary" v-bind="attrs" v-on="on" @click="viewItem(item)">
               <v-icon dark>{{ path3 }}</v-icon>
             </v-btn>
-            <v-btn class="mx-2" fab dark small color="red" @click="deleteDataU(item)">
+            </template>
+            <span>View </span>
+          </v-tooltip>
+
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+            <v-btn class="mx-2" fab dark small color="red"  v-bind="attrs" v-on="on" @click="deleteDataU(item)">
               <v-icon dark>{{ path2 }}</v-icon>
             </v-btn>
+          </template>
+          <span>Delete </span>
+        </v-tooltip>
+
           </template>
         </v-data-table>
 
@@ -191,8 +200,20 @@
                               </template>
                             </td>
                             <td>
-                              <v-btn icon small @click="viewHomework(n)"><svg-icon color="blue" type="mdi" :path="path1"></svg-icon></v-btn>
-                              <v-btn icon small @click="deleteData(n,0)"><svg-icon color="red" type="mdi" :path="path2"></svg-icon></v-btn>
+                              <v-tooltip bottom>
+                                <template v-slot:activator="{ on, attrs }">
+                              <v-btn icon small  v-bind="attrs" v-on="on" @click="viewHomework(n)"><svg-icon color="blue" type="mdi" :path="path1"></svg-icon></v-btn>
+                              </template>
+                              <span>View User</span>
+                              </v-tooltip>
+
+                              <v-tooltip bottom>
+                                <template v-slot:activator="{ on, attrs }">
+                              <v-btn icon small  v-bind="attrs" v-on="on" @click="deleteData(n,0)"><svg-icon color="red" type="mdi" :path="path2"></svg-icon></v-btn>
+                              </template>
+                              <span>Delete</span>
+                              </v-tooltip>
+
                             </td>
                           </tr>
                         </tbody>
@@ -209,11 +230,46 @@
             </v-expand-transition>
             <v-card-actions class="justify-center">
              
-              <v-btn v-if="enableUser" class="white--text blue" @click="updateUser()"><v-icon dark>{{ path1 }}</v-icon></v-btn>
+
+              <v-tooltip bottom v-if="enableUser">
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn  class="white--text blue" v-bind="attrs" v-on="on" @click="updateUser()"><v-icon dark>{{ path1 }}</v-icon></v-btn>
+                </template>
+                <span>Edit User</span>
+              </v-tooltip>
+              
+              <v-tooltip bottom v-if="!enableUser">
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn  class="white--text orange" v-bind="attrs" v-on="on" @click="editUser()"><v-icon dark>{{ path1 }}</v-icon></v-btn>
+                </template>
+                <span>Edit User</span>
+              </v-tooltip>
+              
+              <v-tooltip bottom v-if="!enableUser">
+                <template v-slot:activator="{ on, attrs }">
+                <v-btn  class="white--text blue" v-bind="attrs" v-on="on" @click="newHomework(selectedRecord)"><v-icon dark>{{ path6 }}</v-icon></v-btn>
+                </template>
+                <span>Add Homework</span>
+              </v-tooltip>
+
+              <v-tooltip bottom v-if="!enableUser">
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn  class="white--text red" v-bind="attrs" v-on="on" @click="modalOpen = false"><v-icon dark>{{ path7 }}</v-icon></v-btn>
+                </template>
+                <span>Cancel</span>
+              </v-tooltip>
+              <v-tooltip bottom v-if="enableUser">
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn  class="white--text red" v-bind="attrs" v-on="on" @click="disableUser"><v-icon dark>{{ path7 }}</v-icon></v-btn>
+                </template>
+                <span>Editar User</span>
+              </v-tooltip>
+
+            <!--   <v-btn v-if="enableUser" class="white--text blue" @click="updateUser()"><v-icon dark>{{ path1 }}</v-icon></v-btn>
               <v-btn v-if="!enableUser" class="white--text orange" @click="editUser()"><v-icon dark>{{ path1 }}</v-icon></v-btn>
               <v-btn v-if="!enableUser" class="white--text blue" @click="newHomework(selectedRecord)"><v-icon dark>{{ path6 }}</v-icon></v-btn>
               <v-btn v-if="!enableUser" class="white--text red" @click="modalOpen = false"><v-icon dark>{{ path7 }}</v-icon></v-btn>
-              <v-btn v-if="enableUser" class="white--text red" @click="disableUser"><v-icon dark>{{ path7 }}</v-icon></v-btn>
+              <v-btn v-if="enableUser" class="white--text red" @click="disableUser"><v-icon dark>{{ path7 }}</v-icon></v-btn> -->
             </v-card-actions>
           </v-card>
         </v-dialog>
