@@ -5,11 +5,15 @@ import {
   mdiClockTimeEight,
   mdiCheckCircle,
   mdiPlusCircle,
-  mdiAlphaXCircle  
+  mdiAlphaXCircle,
+  mdiLogout,
+  mdiAccountCircle    
 } from '@mdi/js';
 import {User, Homework}  from '@/Models/Read_models';
 import Swal from 'sweetalert2';
 import auth from '../Login_Component/auth.js';
+
+  
 export default {
   
   name: 'Read_',
@@ -18,6 +22,7 @@ export default {
   data() {
     return {
 
+        user_data:JSON.parse(localStorage.getItem('user')),
         path1:mdiFileEdit,
         path2:mdiDelete,
         path3:mdiEye,
@@ -25,7 +30,8 @@ export default {
         path5:mdiCheckCircle ,
         path6:mdiPlusCircle,
         path7:mdiAlphaXCircle ,
-
+        logout_i: mdiLogout,
+        user_i:mdiAccountCircle,
       headers: [
         { text: 'ID', value: 'id' , style: 'color: red;' },
         { text: 'Name', value: 'name', style: 'color: blue;' },
@@ -64,6 +70,7 @@ export default {
   methods: {
     
     async fetchDataFromAPI() {
+  
       try {
         const response = await this.$http.get('http://127.0.0.1:8000/api/datos');
         this.items = response.data.response
@@ -253,6 +260,13 @@ export default {
       this.edit = !this.edit;
     },
 
+    logout() {
+      auth.logout(this.$router);
+    },
+    viewUserL() {
+      // Logic for viewing user details
+      this.modalOpen = true;
+    }
   },
   
   mounted() {

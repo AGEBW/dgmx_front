@@ -1,9 +1,54 @@
 <template>
   <v-app>
     <v-app-bar app color="primary" dark>
-      <v-toolbar-title>Homework Control</v-toolbar-title>
+      <v-toolbar-title>{{ user_data.name ? user_data.name : '' }}</v-toolbar-title>
       <v-spacer></v-spacer>
-      
+     <!--  <v-btn icon @click="logout">
+        <v-icon>mdi-logout</v-icon>
+      </v-btn>
+      <v-tooltip bottom>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn icon v-bind="attrs" v-on="on" @click="viewUserL">
+            <v-icon>mdi-account</v-icon>
+          </v-btn>
+        </template>
+        <span>View User</span>
+      </v-tooltip> -->
+
+      <v-menu offset-y>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn icon v-bind="attrs" v-on="on">
+            <svg-icon color="white" type="mdi" :path="user_i"></svg-icon>
+          </v-btn>
+        </template>
+        <v-list style="background-color: #1976D2; color: white;">
+          <v-list-item @click="viewUser">
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on }">
+                <div style="display: flex; align-items: center;">
+                  <v-list-item-title>
+                    <svg-icon v-on="on" color="white" type="mdi" :path="user_i"></svg-icon>
+                  </v-list-item-title>
+                  <span style="color:white">User</span>
+                </div>
+              </template>
+            </v-tooltip>
+          </v-list-item>
+          <v-list-item @click="logout">
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on }">
+                <div style="display: flex; align-items: center;">
+                  <v-list-item-title>
+                    <svg-icon v-on="on" color="white" type="mdi" :path="logout_i"></svg-icon>
+                  </v-list-item-title>
+                  <span style="color:white">Logout</span>
+                </div>
+              </template>
+            </v-tooltip>
+          </v-list-item>
+        </v-list>
+        
+      </v-menu>
     </v-app-bar>
 
     
@@ -163,6 +208,7 @@
               </div>
             </v-expand-transition>
             <v-card-actions class="justify-center">
+             
               <v-btn v-if="enableUser" class="white--text blue" @click="updateUser()"><v-icon dark>{{ path1 }}</v-icon></v-btn>
               <v-btn v-if="!enableUser" class="white--text orange" @click="editUser()"><v-icon dark>{{ path1 }}</v-icon></v-btn>
               <v-btn v-if="!enableUser" class="white--text blue" @click="newHomework(selectedRecord)"><v-icon dark>{{ path6 }}</v-icon></v-btn>
@@ -258,8 +304,10 @@ export default {
       this.showImage = false;
     }, 5000);
   },
+ 
 };
 </script>
+
 
 <style scoped>
 .number-circle {
@@ -296,5 +344,20 @@ export default {
   color: #3f51b5; 
   margin-top: 16px;
   text-align: center;
+}
+.v-list {
+  background-color: #1976D2;
+}
+.v-list-item {
+  color: white;
+}
+.v-menu__content--fixed {
+  background-color: transparent;
+  box-shadow: none;
+}
+/* Estilo para el texto de los elementos de la lista */
+.v-list-item-title {
+  color: white; /* Color blanco para el texto */
+  font-weight: bold; /* Texto en negritas */
 }
 </style>

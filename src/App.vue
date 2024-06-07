@@ -16,8 +16,10 @@
 </template>
 
 <script>
+const user_data = JSON.parse(localStorage.getItem('user'));
 export default {
   name: 'App',
+  user_d: user_data,
   components: {}
 }
 </script>

@@ -4,23 +4,38 @@ import axios from 'axios';
 
 
 const API_URL = 'http://127.0.0.1:8000/api/';
+const user_data = JSON.parse(localStorage.getItem('user'));
 
 class AuthService {
   UserData = new User;
-
   async login(user) {
     return axios
       .post(API_URL + 'login', {email: user.email,password: user.password})
       .then(response => {
         if (response.data.token) {
-          localStorage.setItem('user', JSON.stringify(response.data));
+          localStorage.setItem('user', JSON.stringify(response.data.user));
+          console.log(user_data);
         }
         return response.data;
       });
   }
 
-  logout() {
-    localStorage.removeItem('user');
+  async logout(router) {
+    Swal.fire({
+      title: 'Advice',
+      text: 'Are you sure to logout?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Confirmar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        localStorage.removeItem('user');
+        router.push('/');
+       }
+    });
   }
 
   async register(user, flag) {
