@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-app-bar app color="primary" dark>
-      <v-toolbar-title>Programacion de actividades</v-toolbar-title>
+      <v-toolbar-title>Panel Homework</v-toolbar-title>
       <v-spacer></v-spacer>
       
     </v-app-bar>
